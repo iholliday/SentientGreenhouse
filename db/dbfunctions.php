@@ -34,7 +34,7 @@ require '_connect.php';
 
 /*
 // Run a query
-function run_query($conn=$connect, $sql, $params, $typeString) {
+function runQuery($conn=$connect, $sql, $params, $typeString) {
     // Output for testing
     echo "<script>console.log('Database testing');
     console.log('$conn');
@@ -58,7 +58,7 @@ function run_query($conn=$connect, $sql, $params, $typeString) {
 }
 */
 
-function executeQuery(PDO $pdo, string $sql, array $params = []): array
+function runQuery(string $sql, array $params = [], PDO $pdo=$pdo): array
 {
     try {
         $stmt = $pdo->prepare($sql);
@@ -92,4 +92,7 @@ function executeQuery(PDO $pdo, string $sql, array $params = []): array
         ];
     }
 }
+
+$test = runQuery("SELECT * FROM Controls");
+echo "<script>console.log($test)</script>";
 ?>

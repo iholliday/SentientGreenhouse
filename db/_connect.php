@@ -14,7 +14,7 @@ if (!$connect) {
 }
 
 $pdo = new PDO(
-    "mysql:host=localhost;dbname=mydb;charset=utf8mb4",
+    "mysql:host=$host;dbname=$database;charset=utf8mb4",
     $username,
     $password,
     [

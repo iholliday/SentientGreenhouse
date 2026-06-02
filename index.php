@@ -1,4 +1,4 @@
-<?php include_once('_connect.php');  ?>
+<?php include_once('db/_connect.php');  ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
