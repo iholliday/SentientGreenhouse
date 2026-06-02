@@ -22,6 +22,7 @@ else
 
 
 $example_sql = "INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)"
+$typeString = sss
 */
 
 
@@ -31,8 +32,9 @@ $example_sql = "INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, 
 // Database connection
 require '_connect.php';
 
+/*
 // Run a query
-function run_query($conn=$connect, $sql, $params) {
+function run_query($conn=$connect, $sql, $params, $typeString) {
     // Output for testing
     echo "<script>console.log('Database testing');
     console.log('$conn');
@@ -41,19 +43,53 @@ function run_query($conn=$connect, $sql, $params) {
     console.log('');
     <script>";
 
-    // Prepare and bind sql statement with parameters
-    $stmt = $mysqli -> prepare("");
-    $stmt -> bind_param("sss", $firstname, $lastname, $email);
-
-    // Perform query
-    if ($result = mysqli_query($con, "SELECT * FROM Persons")) {
-    echo "Returned rows are: " . mysqli_num_rows($result);
-    // Free result set
-    mysqli_free_result($result);
+    // Prepare and bind sql statement with parameters if any
+    $stmt = mysqli_prepare($conn, $sql);
+    if ($params){
+        $stmt -> bind_param($typeString, ...$params);
     }
+
+    // Run query
 
     // Output errors
 
     // Return array of results if any
     return $result;
 }
+*/
+
+function executeQuery(PDO $pdo, string $sql, array $params = []): array
+{
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+
+        // Query returned a result set (SELECT, SHOW, DESCRIBE, etc.)
+        if ($stmt->columnCount() > 0) {
+            return [
+                'success' => true,
+                'rows' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+                'rowCount' => $stmt->rowCount(),
+                'lastInsertId' => null
+            ];
+        }
+
+        // INSERT/UPDATE/DELETE/etc.
+        return [
+            'success' => true,
+            'rows' => null,
+            'rowCount' => $stmt->rowCount(),
+            'lastInsertId' => $pdo->lastInsertId()
+        ];
+
+    } catch (PDOException $e) {
+        return [
+            'success' => false,
+            'error' => $e->getMessage(),
+            'rows' => null,
+            'rowCount' => 0,
+            'lastInsertId' => null
+        ];
+    }
+}
+?>
