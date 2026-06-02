@@ -1,9 +1,13 @@
 <?php
 
-include_once 'dbfunctions.php';
+require_once 'dbfunctions.php';
 
 // Get current status of controls
-function getControls()
+function getControls() {
+    return run_query("
+    SELECT * FROM Controls LIMIT 1;
+    ");
+}
 
 // Turn (off/on) a (specified control) - heating, lighting, water, windows
 function setControl($control, $value) {
