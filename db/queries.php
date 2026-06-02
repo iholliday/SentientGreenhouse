@@ -11,7 +11,12 @@ function getControls() {
 
 // Turn (off/on) a (specified control) - heating, lighting, water, windows
 function setControl($control, $value) {
-
+    return run_query("
+    UPDATE control
+    SET (control, value)
+    VALUES (?, ?),
+    
+    ");
 }
 
 // Get current/30day (make the 30 day per day not time in last 30 days) humidity/temperature data - in one using nested (temp, humid, temp[], humid[])?
