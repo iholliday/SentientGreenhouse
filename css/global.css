@@ -1,0 +1,26 @@
+:root {
+    /* Colours */
+    dark-green: rgb
+    light-green:
+    dark-orange:
+    light-orange:
+    dark-beige:
+    light-beige:
+
+
+
+    /* Spacing */
+}
+
+/* testing */
+* {
+    border: dashed darkcyan
+}
+
+.circleborder {
+
+}
+
+.doublecircleborder {
+    border: double 2px 
+}
